@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>分类</title>
-  <link rel="stylesheet" href="../static/css/semantic.min.css">
-  <link rel="stylesheet" href="../static/css/me.css">
-  <script src="../static/js/jquery.js"></script>
-  <script src="../static/js/semantic.min.js" type="application/javascript"></script>
+  <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
+  <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
+  <script src="../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
 
   <script>
     $(function () {
@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<nav class="ui inverted attached segment m-padding-tb-mini m-shadow">
+<nav th:replace="_fragments :: menu(2)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">Blog</h2>
@@ -286,7 +286,7 @@
   </div>
 </div>
 
-<footer class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
   <div class="ui center aligned container">
     <div class="ui inverted divided stackable grid">
       <div class="three wide column">
@@ -320,6 +320,6 @@
       <span>Copyright</span><i class="copyright icon"></i> <span>2020 - 2020 Designed By Sheriby</span>
     </div>
   </div>
-</footer>
+</footerth>
 </body>
 </html>

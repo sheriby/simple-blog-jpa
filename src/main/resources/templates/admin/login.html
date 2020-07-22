@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+  <title>登录</title>
+
+  <link rel="stylesheet" href="" th:href="@{css/semantic.min.css}">
+  <script src="assets/library/jquery.min.js" th:src="@{js/jquery.js}"></script>
+  <script src="" th:src="@{js/semantic.min.js}"></script>
+
+  <script>
+    $(function () {
+      $('.ui.form').form({
+        fields: {
+          username: {
+            identifier: 'username',
+            rules: [{
+              type: 'empty',
+              prompt: '用户名： 用户名不能为空'
+            }]
+          },
+          password: {
+            identifier: 'password',
+            rules: [{
+              type: 'empty',
+              prompt: '密码： 密码不能为空'
+            }]
+          }
+        }
+      })
+    })
+  </script>
+
+  <style>
+    body {
+      background: url("/images/bg.png");
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+      border: 1px solid #efefef;
+    }
+  </style>
+</head>
+<body>
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <div class="content">
+        登录账号
+      </div>
+    </h2>
+    <form class="ui large form">
+      <div class="ui stacked segment">
+        <div class="required field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="用户名">
+          </div>
+        </div>
+        <div class="required field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="密码">
+          </div>
+        </div>
+        <div class="ui fluid large teal submit button">登录</div>
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+  </div>
+</div>
+
+</body>
+
+</html>

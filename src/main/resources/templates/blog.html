@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>详情</title>
-  <link rel="stylesheet" href="../static/css/semantic.min.css">
-  <link rel="stylesheet" href="../static/css/typo.css">
-  <link rel="stylesheet" href="../static/css/animate.min.css">
-  <link rel="stylesheet" href="../static/lib/prism/prism.css">
-  <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
+  <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
+  <link rel="stylesheet" href="../static/css/typo.css" th:href="@{css/typo.css}">
+  <link rel="stylesheet" href="../static/css/animate.min.css" th:href="@{css/animate.min.css}">
+  <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{lib/prism/prism.css}">
+  <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{lib/tocbot/tocbot.css}">
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
 
-  <link rel="stylesheet" href="../static/css/me.css">
-  <script src="../static/js/jquery.js"></script>
-  <script src="../static/js/scrollTo.js"></script>
-  <script src="../static/js/semantic.min.js"></script>
-  <script src="../static/lib/prism/prism.js"></script>
-  <script src="../static/lib/tocbot/tocbot.min.js"></script>
-  <script src="../static/lib/qrcode/qrcode.min.js"></script>
+  <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
+  <script src="../static/js/scrollTo.js" th:src="@{js/scrollTo.js}"></script>
+  <script src="../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
+  <script src="../static/lib/prism/prism.js" th:src="@{lib/prism/prism.js}"></script>
+  <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{lib/tocbot/tocbot.min.js}"></script>
+  <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{lib/qrcode/qrcode.min.js}"></script>
 
   <script>
     $(function () {
@@ -435,7 +435,7 @@ cp dict/* linkdict
 
 
 
-<footer class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
   <div class="ui center aligned container">
     <div class="ui inverted divided stackable grid">
       <div class="three wide column">

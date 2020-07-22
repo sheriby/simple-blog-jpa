@@ -2,33 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>关于</title>
+  <title>500</title>
+
   <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
   <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
   <script src="../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
 
   <script>
-    $(function () {
-      $('.menu_toggle').click(function () {
-        $('.m-item').toggleClass('m-mobile-hide')
+      $(function () {
+          $('.menu_toggle').click(function () {
+              $('.m-item').toggleClass('m-mobile-hide')
+          })
       })
-    })
   </script>
 
 </head>
 <body>
-
-<nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">Blog</h2>
-      <a href="#" class="m-item item m-mobile-hide"><i class="small home icon"></i>首页</a>
+      <a href="#" class="active m-item item m-mobile-hide"><i class="small home icon"></i>首页</a>
       <a href="#" class="m-item item m-mobile-hide"><i class="small idea icon"></i>分类</a>
       <a href="#" class="m-item item m-mobile-hide"><i class="small tags icon"></i>标签</a>
       <a href="#" class="m-item item m-mobile-hide"><i class="small clone icon"></i>归档</a>
-      <a href="#" class="active m-item item m-mobile-hide"><i class="small info icon"></i>关于</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="small info icon"></i>关于</a>
       <div class="right m-item item m-mobile-hide">
         <div class="ui icon input secondary">
           <input type="text" placeholder="搜索" class="m-bg-transparent m-border-white m-font-white">
@@ -42,48 +41,13 @@
   </a>
 </nav>
 
-<div class="m-container m-padding-tb-huge">
-  <div class="ui container">
-    <div class="ui stackable grid">
-      <div class="eleven wide column">
-        <img src="../static/images/pic.jpg" th:src="@{images/pic.jpg}" class="ui rounded image">
-      </div>
-      <div class="five wide column">
-         <div class="ui top attached segment m-padding-tb-med">
-           <div class="ui header pink">关于我</div>
-         </div>
-        <div class="ui attached segment m-text small m-text-lined">
-          <p>
-            Sheriby，正在学习编程，喜欢二次元，是一个热爱一切美好事物的人，希望找到可以共同成长的小伙伴。
-          </p>
-          <p>喜欢瞎折腾，尝试新鲜事物，是一个Arch Linux使用者。</p>
-        </div>
-        <div class="ui attached segment m-padding-tb-med">
-          <div class="ui orange basic left pointing label">编程</div>
-          <div class="ui orange basic left pointing label">动漫</div>
-          <div class="ui orange basic left pointing label">Linux</div>
-          <div class="ui orange basic left pointing label">思考</div>
-        </div>
-        <div class="ui attached segment m-padding-tb-med">
-          <div class="ui teal basic left pointing label">C</div>
-          <div class="ui teal basic left pointing label">C++</div>
-          <div class="ui teal basic left pointing label">Java</div>
-          <div class="ui teal basic left pointing label">Python</div>
-          <div class="ui teal basic left pointing label m-margin-t">JavaScript</div>
-          <div class="ui teal basic left pointing label m-margin-t">MySQL</div>
-        </div>
-        <div class="ui bottom attached segment center aligned m-padding-tb-med">
-          <a href="#" class="ui circular icon button m-margin-lr-small"><i class="black github icon"></i></a>
-          <a href="#" class="ui circular icon button m-margin-lr-small"><i class="red weibo icon"></i></a>
-          <a href="#" class="ui circular icon button m-margin-lr-small"><i class="green wechat icon"></i></a>
-          <a href="#" class="ui circular icon button m-margin-lr-small"><i class="red qq icon"></i></a>
-        </div>
-      </div>
-    </div>
-    
+<div class="m-container-small m-padding-lr-huge">
+  <div class="ui fluid error message"
+       style="margin: 120px auto; padding: 50px 100px; width: 100%;text-align: center">
+    <h1 class="ui header" style="font-size: 3em">500 Internal Server Error</h1>
+    <h3 style="font-size: 2em">请联系网站管理员</h3>
   </div>
 </div>
-
 
 <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
   <div class="ui center aligned container">

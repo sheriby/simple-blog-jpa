@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<nav class="ui inverted attached segment m-padding-tb-mini m-shadow">
+<nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">Blog</h2>
@@ -405,7 +405,7 @@
   </div>
 </div>
 
-<footer class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
   <div class="ui center aligned container">
     <div class="ui inverted divided stackable grid">
       <div class="three wide column">

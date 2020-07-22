@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>fragment</title>
+</head>
+<body>
+
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui header teal item">Blog</h2>
+      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 1} ? 'active'">
+        <i class="small home icon"></i>首页
+      </a>
+      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 2} ? 'active'">
+        <i class="small idea icon"></i>分类
+      </a>
+      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 3} ? 'active'">
+        <i class="small tags icon"></i>标签
+      </a>
+      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 4} ? 'active'">
+        <i class="small clone icon"></i>归档
+      </a>
+      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 5} ? 'active'">
+        <i class="small info icon"></i>关于
+      </a>
+      <div class="right m-item item m-mobile-hide">
+        <div class="ui icon input secondary">
+          <input type="text" placeholder="搜索" class="m-bg-transparent m-border-white m-font-white">
+          <i class="search icon link inverted"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="ui menu_toggle black button icon m-top-right m-mobile-show menu">
+    <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+
+<footer th:fragment="footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+  <div class="ui center aligned container">
+    <div class="ui inverted divided stackable grid">
+      <div class="three wide column">
+        <img src="../../static/images/qrcode.png" th:src="@{images/qrcode.png}" class="ui rounded images" style="width: 110px;">
+      </div>
+      <div class="four wide column">
+        <h4 class="ui inverted header m-text">最新博客</h4>
+        <div class="ui inverted link list m-text">
+          <a href="#" class="item m-text-lined">Spring Boot实战</a>
+          <a href="#" class="item">Spring源码分析</a>
+          <a href="#" class="item m-text-lined">使用MyBatis Plus简化开发</a>
+        </div>
+      </div>
+      <div class="four wide column">
+        <h4 class="ui inverted header m-text">联系我</h4>
+        <div class="ui inverted link list m-text">
+          <a href="#" class="item m-text-lined"> Email: hony_sher@foxmail.com </a>
+          <a href="#" class="item "> QQ: 422343831</a>
+        </div>
+      </div>
+      <div class="five wide column">
+        <h4 class="ui inverted header m-text">Blog</h4>
+        <p class="ui inverted m-text m-opacity-large m-text-lined">
+          每个人都不得不面对这些问题。 在面对这种问题时， 我们都知道，只要有意义，那么就必须慎重考虑。 雷锋曾经说过，
+          自己活着，就是为人民。
+        </p>
+      </div>
+    </div>
+    <div class="ui inverted section divider"></div>
+    <div class="m-text">
+      <span>Copyright</span><i class="copyright icon"></i> <span>2020 - 2020 Designed By Sheriby</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
