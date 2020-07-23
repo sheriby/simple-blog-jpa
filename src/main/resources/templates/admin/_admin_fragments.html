@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>admin</title>
+</head>
+<body>
+
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui header teal item">博客管理</h2>
+      <a href="#" th:href="@{/admin/index}" class="m-item item m-mobile-hide" th:classappend="${n == 1} ? 'active'"><i class="small home icon"></i>首页</a>
+      <a href="#" th:href="@{/admin/blog}" class="m-item item m-mobile-hide" th:classappend="${n == 2} ? 'active'"><i class="small home icon"></i>博客</a>
+      <a href="#" th:href="@{/admin/type}" class="m-item item m-mobile-hide" th:classappend="${n == 3} ? 'active'"><i class="small idea icon"></i>分类</a>
+      <a href="#" th:href="@{/admin/tag}" class="m-item item m-mobile-hide" th:classappend="${n == 4} ? 'active'"><i class="small tags icon"></i>标签</a>
+      <div class="right item m-item m-mobile-hide">
+        <div class="right aligned ui dropdown item">
+          <div class="text">
+            <img src="../../static/images/avatar/head.jpg"  th:src="@{{img}(img=${session.user.avatar})}" class="ui avatar image" style="margin-right: 0.3em">
+            <span class="m-font-small m-font-thin username" th:text="${session.user.username}">SHeR</span>
+          </div>
+          <i class="dropdown icon"></i>
+          <div class="menu m-font-small m-font-thin">
+            <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="ui menu_toggle black button icon m-top-right m-mobile-show menu">
+    <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+</body>
+</html>

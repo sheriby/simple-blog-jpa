@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>500</title>
 
+  <base href="/">
   <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
   <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
   <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
@@ -19,7 +20,7 @@
 
 </head>
 <body>
-<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
+<nav th:replace="_fragments :: menu(n)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">Blog</h2>
