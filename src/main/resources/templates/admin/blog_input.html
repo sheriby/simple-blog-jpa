@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>博客发布</title>
-  <link rel="stylesheet" href="../../static/css/semantic.min.css">
-  <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
-  <link rel="stylesheet" href="../../static/css/me.css">
+  <base href="/">
+  <link rel="stylesheet" th:href="@{css/semantic.min.css}" href="../../static/css/semantic.min.css">
+  <link rel="stylesheet" th:href="@{lib/editormd/css/editormd.min.css}"
+        href="../../static/lib/editormd/css/editormd.min.css">
+  <link rel="stylesheet" th:href="@{css/me.css}" href="../../static/css/me.css">
 
-  <script src="../../static/js/jquery.js"></script>
-  <script src="../../static/lib/editormd/editormd.min.js"></script>
-  <script src="../../static/js/semantic.min.js" type="application/javascript"></script>
+  <script src="../../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
+  <script src="../../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
+  <script src="../../static/lib/editormd/editormd.min.js" th:src="@{lib/editormd/editormd.min.js}"></script>
 
   <script>
     $(function () {
@@ -46,12 +48,22 @@
         }
       })
 
+      $('#saveBtn').click(() => {
+        $('[name="publish"]').val(false)
+        $('#blogForm').submit()
+      })
+
+      $('#submitBtn').click(() => {
+        $('[name="publish"]').val(true)
+        $('#blogForm').submit()
+      })
+
       /************ editor.md *************/
       Edit = editormd('md-content', {
         width: '100%',
         height: '640',
         syncScrolling: 'single',
-        path: '../../static/lib/editormd/lib/'
+        path: 'lib/editormd/lib/'
       })
 
     })
@@ -61,7 +73,7 @@
 </head>
 <body>
 
-<nav class="ui inverted attached segment m-padding-tb-mini m-shadow">
+<nav th:replace="admin/_admin_fragments :: menu(2)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">博客管理</h2>
@@ -97,9 +109,9 @@
   </div>
 </div>
 
-<div class="m-container-small m-padding-tb-huge">
+<div class="m-container m-padding-tb-huge">
   <div class="ui container">
-    <form action="#" method="post" class="ui form">
+    <form id="blogForm" action="#" method="post" th:action="@{/admin/blog}" class="ui form">
       <div class="required field">
         <div class="ui left labeled input">
           <div class="ui selection green compact basic dropdown label">
@@ -127,14 +139,11 @@
           <div class="ui labeled input">
             <label class="ui compact blue basic label">分类</label>
             <div class="ui selection fluid dropdown">
-              <input type="hidden" name="type">
+              <input type="hidden" name="type.id">
               <i class="dropdown icon"></i>
               <div class="text">技术</div>
               <div class="menu">
-                <div class="item" data-value="tech">技术</div>
-                <div class="item" data-value="daily">日常</div>
-                <div class="item" data-value="lesson">课内</div>
-                <div class="item" data-value="note">笔记</div>
+                <div th:each="type : ${types}" class="item" th:data-value="${type.id}" th:text="${type.name}">技术</div>
               </div>
             </div>
           </div>
@@ -143,14 +152,11 @@
           <div class="ui fluid labeled input">
             <label class="ui compact blue basic label">标签</label>
             <div class="ui multiple search selection fluid dropdown">
-              <input type="hidden" name="tags">
+              <input type="hidden" name="tagIds">
               <i class="dropdown icon"></i>
               <div class="text">Java</div>
               <div class="menu">
-                <div class="item" data-value="java">Java</div>
-                <div class="item" data-value="spring">Spring</div>
-                <div class="item" data-value="python">Python</div>
-                <div class="item" data-value="mybatis">MyBatis</div>
+                <div th:each="tag : ${tags}" class="item" th:data-value="${tag.id}" th:text="${tag.name}">Java</div>
               </div>
             </div>
           </div>
@@ -171,7 +177,7 @@
             <label for="recommend">推荐</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="info" name="info" checked class="hidden">
+            <input type="checkbox" id="info" name="shareStatement" checked class="hidden">
             <label for="info">转载</label>
           </div>
           <div class="ui checkbox m-margin-r">
@@ -187,16 +193,17 @@
 
       <div class="ui error message"></div>
 
+      <input type="hidden" name="publish">
       <div class="ui container right aligned">
         <button type="button" class="ui negative button" onclick="window.history.go(-1)">返回</button>
-        <button class="ui blue button m-margin-lr">保存</button>
-        <button class="ui positive button">提交</button>
+        <button id="saveBtn" class="ui blue button m-margin-lr">保存</button>
+        <button id="submitBtn" class="ui positive button">提交</button>
       </div>
     </form>
   </div>
 </div>
 
-<footer class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
   <div class="ui center aligned container">
     <div class="ui inverted divided stackable grid">
       <div class="three wide column">

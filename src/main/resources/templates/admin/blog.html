@@ -20,6 +20,28 @@
         on: 'click'
       })
 
+      $('.close.icon').click(() => {
+        $('.ui.success.message').hide()
+      })
+
+      window.page = function (obj) {
+        $('[name="page"]').val($(obj).data("page"))
+        loadData()
+      }
+
+      function loadData() {
+        $("#table-container").load("/admin/blog/search", {
+          title: $("[name='title']").val(),
+          typeId: $("[name='typeId']").val(),
+          recommend: $("[name='recommend']").prop('checked'),
+          page: $("[name='page']").val()
+        })
+      }
+
+      $('#searchBtn').click(function () {
+        loadData();
+      })
+
     })
 
   </script>
@@ -65,8 +87,15 @@
 
 <div class="m-container-small m-padding-tb-huge">
   <div class="ui container">
+    <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+      <i class="close icon"></i>
+      <div class="header">提示</div>
+      <p th:text="${message}">操作成功</p>
+    </div>
+
     <div class="ui segment m-relative">
       <form action="#" method="post" class="ui form">
+        <input type="hidden" name="page">
         <div class="inline fields" style="margin-bottom: 0">
           <div class="field">
             <input type="text" name="title" placeholder="标题">
@@ -74,14 +103,12 @@
 
           <div class="field">
             <div class="ui selection dropdown">
-              <input type="hidden" name="type"/>
+              <input type="hidden" name="typeId"/>
               <i class="dropdown icon"></i>
               <div class="default text">分类</div>
               <div class="menu">
-                <div class="item" data-value="java">Java</div>
-                <div class="item" data-value="linux">Linux</div>
-                <div class="item" data-value="Spring">Spring</div>
-                <div class="item" data-value="mybatis">MyBatis</div>
+                <div th:each="type : ${types}" class="item"
+                     th:data-value="${type.id}" th:text="${type.name}">Java</div>
               </div>
             </div>
           </div>
@@ -94,104 +121,63 @@
           </div>
 
           <div class="field">
-            <div class="ui tiny teal basic button m-margin-lr"><i class="search icon"></i>搜索</div>
+            <div id="searchBtn" class="ui tiny teal basic button m-margin-lr"><i class="search icon"></i>搜索</div>
           </div>
         </div>
       </form>
-      <button class="ui small positive button" style="position: absolute;right: 10px; top: 16px">新增</button>
+      <a href="#" th:href="@{admin/blog/input}" class="ui small positive button" style="position: absolute;right: 10px; top: 16px">新增</a>
     </div>
 
-    <table class="ui purple celled table center aligned">
-      <thead>
-      <tr>
-        <th></th>
-        <th>标题</th>
-        <th>类型</th>
-        <th>推荐</th>
-        <th>更新时间</th>
-        <th>操作</th>
-      </tr>
-      </thead>
+    <div id="table-container">
+      <table th:fragment="blogList" class="ui purple celled table ">
+        <thead class="center aligned">
+        <tr>
+          <th></th>
+          <th>标题</th>
+          <th>类型</th>
+          <th>推荐</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
 
-      <tbody>
-      <tr>
-        <td>1</td>
-        <td>Spring源码分析</td>
-        <td>Spring</td>
-        <td>2020-07-21 20:36</td>
-        <td>是</td>
-        <td>
-          <a href="#" class="ui mini blue basic button m-margin-lr">编辑</a>
-          <a href="#" class="ui mini negative basic button">删除</a>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Spring源码分析</td>
-        <td>Spring</td>
-        <td>2020-07-21 20:36</td>
-        <td>是</td>
-        <td>
-          <a href="#" class="ui mini blue button basic m-margin-lr">编辑</a>
-          <a href="#" class="ui mini negative basic button">删除</a>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Spring源码分析</td>
-        <td>Spring</td>
-        <td>2020-07-21 20:36</td>
-        <td>是</td>
-        <td>
-          <a href="#" class="ui mini blue button basic m-margin-lr">编辑</a>
-          <a href="#" class="ui mini negative basic button">删除</a>
-        </td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Spring源码分析</td>
-        <td>Spring</td>
-        <td>2020-07-21 20:36</td>
-        <td>是</td>
-        <td>
-          <a href="#" class="ui mini blue button basic m-margin-lr">编辑</a>
-          <a href="#" class="ui mini negative basic  button">删除</a>
-        </td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Spring源码分析</td>
-        <td>Spring</td>
-        <td>2020-07-21 20:36</td>
-        <td>是</td>
-        <td>
-          <a href="#" class="ui mini blue button basic m-margin-lr">编辑</a>
-          <a href="#" class="ui mini negative basic button">删除</a>
-        </td>
-      </tr>
-      </tbody>
+        <tbody class="center aligned">
+        <tr th:each="blog, iterStat : ${page.content}">
+          <td th:text="${iterStat.count}">1</td>
+          <td th:text="${blog.title}">Spring源码分析</td>
+          <td th:text="${blog.type.name}">Spring</tds>
+          <td th:text="${blog.recommend} ? '是' : '否'">是</td>
+          <td th:text="${blog.updateTime}">2020-07-21 20:36</td>
+          <td>
+            <a href="#" class="ui mini blue basic button m-margin-lr">编辑</a>
+            <a href="#" class="ui mini negative basic button">删除</a>
+          </td>
+        </tr>
+        </tbody>
 
-      <tfoot>
+        <tfoot>
         <tr>
           <th colspan="6">
-            <div class="ui pagination menu">
-              <a href="#" class="icon item">
+            <div class="ui tiny pagination menu" th:if="${page.totalPages} > 1">
+              <a onclick="page(this)" th:attr="data-page=${page.number} - 1"
+                 th:unless="${page.first}" class="icon item">
                 <i class="left chevron small icon"></i>
+                <span> 上一页</span>
               </a>
-              <a href="#" class="active item">1</a>
-              <a href="#" class="item">2</a>
-              <a href="#" class="item">3</a>
-              <a href="#" class="item">4</a>
-              <a href="#" class="item">5</a>
-              <a href="#" class="icon item">
+              <a onclick="page(this)" th:attr="data-page=${page.number} + 1"
+                 th:unless="${page.last}" class="icon item">
+                <span>下一页 </span>
                 <i class="right chevron small icon"></i>
               </a>
-
             </div>
           </th>
         </tr>
-      </tfoot>
-    </table>
+        </tfoot>
+      </table>
+
+
+    </div>
+
   </div>
 </div>
 

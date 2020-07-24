@@ -21,10 +21,13 @@ public class Blog {
     private Long id;
 
     private String title;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String content;
     private String picture;
     private String flag;
-    private String views;
+    private Integer views;
 
     private boolean appreciation;
     private boolean shareStatement;
@@ -42,6 +45,9 @@ public class Blog {
 
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
+
+    @Transient
+    private String tagIds;
 
     @ManyToOne
     private User user;
