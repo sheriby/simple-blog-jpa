@@ -44,10 +44,14 @@ public class TagController {
 
     @PostMapping
     public String saveTag(Tag tag, Model model) {
+        if (tag.getName().contains(",")){
+            return saveTags(tag.getName());
+        }
         String url = "forward:/admin/tag/input";
         if (tag.getId() != null) {
             url += "/" + tag.getId();
         }
+
         if (StringUtils.isEmpty(tag.getName())) {
             model.addAttribute("message", "分类名不能为空");
             return url;
@@ -72,6 +76,24 @@ public class TagController {
             return "redirect:/admin/tag";
         }
 
+    }
+
+    private String saveTags(String tags) {
+        String[] tagName = tags.split(",");
+        for (String tag : tagName) {
+            Tag tagByName = tagService.getTagByName(tag);
+            if (tagByName != null) {
+                continue;
+            }
+            Tag t = new Tag();
+            t.setName(tag);
+            Tag tag1 = tagService.saveTag(t);
+
+            if (tag1 == null) {
+                throw new RuntimeException();
+            }
+        }
+        return "redirect:/admin/tag";
     }
 
     @RequestMapping("/input/{id}")

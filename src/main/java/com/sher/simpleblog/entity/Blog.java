@@ -2,7 +2,8 @@ package com.sher.simpleblog.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor
+@ToString(exclude = {"type", "tags", "user", "comments"})
 @Entity
 @Table(name = "tb_blog")
 public class Blog {
@@ -35,6 +36,13 @@ public class Blog {
     private boolean publish;
     private boolean recommend;
 
+    public Blog() {
+        appreciation = true;
+        shareStatement = true;
+        comment = true;
+        recommend = true;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,4 +62,23 @@ public class Blog {
 
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
+
+
+    public Blog initTagIds() {
+        if (!StringUtils.isEmpty(tagIds)) {
+            return this;
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        for (Tag tag: tags) {
+            if (flag) {
+                sb.append(",");
+            } else {
+                flag = true;
+            }
+            sb.append(tag.getId());
+        }
+        tagIds = sb.toString();
+        return this;
+    }
 }

@@ -44,6 +44,9 @@ public class TypeController {
 
     @PostMapping
     public String saveType(Type type, Model model) {
+        if (type.getName().contains(",")) {
+            return saveTypes(type.getName());
+        }
         String url = "forward:/admin/type/input";
         if (type.getId() != null) {
             url += "/" + type.getId();
@@ -71,7 +74,23 @@ public class TypeController {
         } else {
             return "redirect:/admin/type";
         }
+    }
 
+    private String saveTypes(String types) {
+        String[] typeName = types.split(",");
+        for (String type : typeName) {
+            Type typeByName = typeService.getTypeByName(type);
+            if (typeByName != null) {
+                continue;
+            }
+            Type t = new Type();
+            t.setName(type);
+            Type type1 = typeService.saveType(t);
+            if (type1 == null) {
+                throw new RuntimeException();
+            }
+        }
+        return "redirect:/admin/type";
     }
 
     @RequestMapping("/input/{id}")

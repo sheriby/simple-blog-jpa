@@ -4,7 +4,9 @@ import com.sher.simpleblog.entity.Blog;
 import com.sher.simpleblog.exception.NotFoundException;
 import com.sher.simpleblog.repository.BlogRepository;
 import com.sher.simpleblog.service.BlogService;
+import com.sher.simpleblog.util.MyBeanUtils;
 import com.sher.simpleblog.vo.BlogQuery;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +16,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author sher
@@ -82,11 +81,16 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public Blog updateBlog(Long id, Blog blog) {
+        blog.setUpdateTime(new Date());
         Optional<Blog> optionalBlog = blogRepository.findById(id);
         if (optionalBlog.isEmpty()) {
             throw new NotFoundException();
         }
-        return optionalBlog.get();
+        Blog b = optionalBlog.get();
+        BeanUtils.copyProperties(blog, b, MyBeanUtils.getNullPropertyName(blog));
+
+        Blog save = blogRepository.save(b);
+        return save;
     }
 
     @Override

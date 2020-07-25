@@ -62,7 +62,14 @@ public class TagServiceImpl implements TagService {
         List<Long> idList = new ArrayList<>();
         String[] idArray = ids.split(",");
         for (String s : idArray) {
-            idList.add(Long.valueOf(s));
+            try {
+                idList.add(Long.valueOf(s));
+            } catch (Exception e) {
+                Tag tag = new Tag();
+                tag.setName(s);
+                Tag save = tagRepository.save(tag);
+                idList.add(save.getId());
+            }
         }
         return idList;
     }

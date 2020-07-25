@@ -44,6 +44,27 @@
               prompt: '封面： 请输入封面引用地址'
             }]
 
+          },
+          type: {
+            identifier: 'type.id',
+            rules: [{
+              type: 'empty',
+              prompt: '分类： 请选择博客分类'
+            }]
+          },
+          tagIds: {
+            identifier: 'tagIds',
+            rules: [{
+              type: 'empty',
+              prompt: '标签： 请选择博客标签'
+            }]
+          },
+          content: {
+            identifier: 'content',
+            rules: [{
+              type: 'empty',
+              prompt: '内容： 请输入博客内容'
+            }]
           }
         }
       })
@@ -56,6 +77,10 @@
       $('#submitBtn').click(() => {
         $('[name="publish"]').val(true)
         $('#blogForm').submit()
+      })
+
+      $('.ui.multiple.fluid.selection.dropdown').dropdown({
+        allowAdditions: true
       })
 
       /************ editor.md *************/
@@ -103,58 +128,61 @@
 <div class="ui  pointing menu">
   <div class="ui container">
     <div class="right menu">
-      <a href="#" class="teal active item">发布</a>
-      <a href="#" class="item">列表</a>
+      <a href="#" th:href="@{/admin/blog/input}" class="teal active item">新增</a>
+      <a href="#" th:href="@{/admin/blog}" class="item">列表</a>
     </div>
   </div>
 </div>
 
 <div class="m-container m-padding-tb-huge">
   <div class="ui container">
-    <form id="blogForm" action="#" method="post" th:action="@{/admin/blog}" class="ui form">
+    <form id="blogForm" action="#" method="post" th:action="@{/admin/blog}" th:object="${blog}" class="ui form">
+      <input type="hidden" name="id" th:value="*{id}">
       <div class="required field">
         <div class="ui left labeled input">
           <div class="ui selection green compact basic dropdown label">
-            <input type="hidden" value="original">
+            <input type="hidden" name="flag" value="原创" th:value="*{flag}==null ? '原创' : *{flag}">
             <i class="dropdown icon"></i>
             <div class="text">原创</div>
             <div class="menu">
-              <div class="item" data-value="original">原创</div>
-              <div class="item" data-value="quotation">转载</div>
-              <div class="item" data-value="translate">翻译</div>
+              <div class="item" data-value="原创">原创</div>
+              <div class="item" data-value="转载">转载</div>
+              <div class="item" data-value="翻译">翻译</div>
             </div>
           </div>
-          <input type="text" name="title" placeholder="标题">
+          <input type="text" name="title" placeholder="标题" th:value="*{title}">
         </div>
       </div>
 
       <div class="field">
         <div id="md-content" style="z-index: 1">
-          <textarea placeholder="博客内容" name="content" style="display: none"></textarea>
+          <textarea placeholder="博客内容" name="content" style="display: none"
+                    th:text="*{content}"></textarea>
         </div>
       </div>
 
       <div class="two fields">
         <div class="field">
-          <div class="ui labeled input">
+          <div class="ui fluid labeled input">
             <label class="ui compact blue basic label">分类</label>
             <div class="ui selection fluid dropdown">
-              <input type="hidden" name="type.id">
+              <input type="hidden" name="type.id" th:value="*{type?.id}">
               <i class="dropdown icon"></i>
-              <div class="text">技术</div>
+              <div class="default text">选择分类</div>
               <div class="menu">
                 <div th:each="type : ${types}" class="item" th:data-value="${type.id}" th:text="${type.name}">技术</div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="field">
           <div class="ui fluid labeled input">
             <label class="ui compact blue basic label">标签</label>
             <div class="ui multiple search selection fluid dropdown">
-              <input type="hidden" name="tagIds">
+              <input type="hidden" name="tagIds" th:value="*{tagIds}">
               <i class="dropdown icon"></i>
-              <div class="text">Java</div>
+              <div class="default text">选择标签</div>
               <div class="menu">
                 <div th:each="tag : ${tags}" class="item" th:data-value="${tag.id}" th:text="${tag.name}">Java</div>
               </div>
@@ -166,26 +194,26 @@
       <div class="required field">
         <div class="ui left labeled input">
           <label class="ui blue basic label">封面</label>
-          <input type="text" name="picture" placeholder="封面图片引用地址">
+          <input type="text" name="picture" placeholder="封面图片引用地址" th:value="*{picture}">
         </div>
       </div>
 
       <div class="inline fields">
         <div class="field">
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="recommend" name="recommend" checked class="hidden">
+            <input type="checkbox" id="recommend" name="recommend" th:checked="*{recommend}" checked class="hidden">
             <label for="recommend">推荐</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="info" name="shareStatement" checked class="hidden">
+            <input type="checkbox" id="info" name="shareStatement" th:checked="*{shareStatement}" checked class="hidden">
             <label for="info">转载</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="appreciation" name="appreciation" checked class="hidden">
+            <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" checked class="hidden">
             <label for="appreciation">赞赏</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="comment" name="comment" checked class="hidden">
+            <input type="checkbox" id="comment" name="comment" th:checked="*{comment}" checked class="hidden">
             <label for="comment">评论</label>
           </div>
         </div>
@@ -193,7 +221,7 @@
 
       <div class="ui error message"></div>
 
-      <input type="hidden" name="publish">
+      <input type="hidden" name="publish" th:value="*{publish}">
       <div class="ui container right aligned">
         <button type="button" class="ui negative button" onclick="window.history.go(-1)">返回</button>
         <button id="saveBtn" class="ui blue button m-margin-lr">保存</button>
