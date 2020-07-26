@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索</title>
+  <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
+  <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
+  <script src="../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
+
+  <script th:inline="javascript">
+    $(function () {
+      $('.menu_toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide')
+      })
+    })
+
+    function loadPage(page) {
+      $('#blog-content').load('/search', {
+        page: page,
+        query: /*[[${query}]]*/'hello world'
+      })
+    }
+
+    window.page = (obj) => {
+      const page = $(obj).data('page')
+      loadPage(page)
+    }
+
+    window.blog = (obj) => {
+      const id = $(obj).data('id')
+      window.location.href = '/blog/'+id
+    }
+  </script>
+
+</head>
+<body>
+
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padding-tb-mini m-shadow">
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui header teal item">Blog</h2>
+      <a href="#" class="m-item item m-mobile-hide"><i class="small home icon"></i>首页</a>
+      <a href="#" class="active m-item item m-mobile-hide"><i class="small idea icon"></i>分类</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="small tags icon"></i>标签</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="small clone icon"></i>归档</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="small info icon"></i>关于</a>
+      <div class="right m-item item m-mobile-hide">
+        <div class="ui icon input secondary">
+          <input type="text" placeholder="搜索" class="m-bg-transparent m-border-white m-font-white">
+          <i class="search icon link inverted"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="ui menu_toggle black button icon m-top-right m-mobile-show menu">
+    <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+<div class="m-container-small m-padding-tb-huge">
+  <div class="ui container">
+    <div class="ui top attached segment">
+      <div class="ui two column grid middle aligned">
+        <div class="column">
+          <h3 class="ui header teal">搜索</h3>
+        </div>
+        <div class="right aligned column">
+          共 <h2 class="ui header orange m-inline-block m-font-thin" th:text="${page.totalElements}">14</h2> 篇
+        </div>
+      </div>
+    </div>
+    <div id="blog-content">
+      <div th:fragment="blog_list">
+        <div class="ui top attached teal segment">
+          <div onclick="blog(this)" th:attr="data-id=${blog.id}" th:each="blog : ${page.content}" class="ui padded vertical segment m-padding-lr-large-resp m-padding-tb-large m-clickable">
+            <div class="ui middle aligned mobile reversed stackable grid">
+              <div class="eleven wide column">
+                <h3 class="ui header" th:text="${blog.title}">使用MyBatis Plus简化我们的开发</h3>
+                <p class="m-text m-text-lined" style="height: 101px" th:text="${blog.description}">
+                  MyBatis Plus是由国人开发的一款MyBatis的插件，完美兼容MyBatis，对MyBatis只做增强不做改变。
+                  源码中的注释也是中文，非常适合我们学习和使用。 源码中的注释也是中文，非常适合我们学习和使用。
+                  非常适合我们使用......
+                </p>
+                <div class="ui stackable mobile reversed grid">
+                  <div class="eleven wide column">
+                    <div class="ui mini horizontal link list middle aligned">
+                      <div class="item">
+                        <img
+                          src="../static/images/pic.jpg"
+                          th:src="@{images/avatar/head.jpg}"
+                          style="width: 30px;height: 30px;" class="ui avatar image">
+                        <div class="content">
+                          <div class="header m-opacity-mini">Sheriby</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <i class="calendar icon"></i>
+                        <span class="middle aligned" th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2020-07-18</span>
+                      </div>
+                      <div class="item">
+                        <i class="eye icon"></i>
+                        <span class="middle aligned" th:text="${blog.views}">8848</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right aligned five wide column middle aligned">
+                    <a href="#" class="ui label mini teal basic m-font-thin" th:text="${blog.type.name}">MyBatis</a>
+                  </div>
+                </div>
+                <div style="float: right">
+                  <a th:each="tag : ${blog.tags}" th:text="${tag.name}" href="#" style="margin-left: 0.5em" class="ui label left pointing m-font-thin mini basic blue">Spring</a>
+                </div>
+              </div>
+
+              <div class="five wide column" style="padding: 0">
+                <a href="#" target="_blank">
+                  <img src="../static/images/pic.jpg"
+                       th:src="@{${blog.picture}}"
+                       class="ui rounded image centered">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!--/*-->
+          <div class="ui padded vertical segment m-padding-lr-large-resp m-padding-tb-large m-clickable">
+            <div class="ui stackable mobile reversed grid">
+              <div class="eleven wide column">
+                <h3 class="ui header">使用MyBatis Plus简化我们的开发</h3>
+                <p class="m-text m-text-lined">
+                  MyBatis Plus是由国人开发的一款MyBatis的插件，完美兼容MyBatis，对MyBatis只做增强不做改变。
+                  源码中的注释也是中文，非常适合我们学习和使用。 源码中的注释也是中文，非常适合我们学习和使用。
+                  非常适合我们使用......
+                </p>
+                <div class="ui stackable mobile reversed grid">
+                  <div class="eleven wide column">
+                    <div class="ui mini horizontal link list middle aligned">
+                      <div class="item">
+                        <img
+                          src="../static/images/pic.jpg"
+                          style="width: 30px;height: 30px;" class="ui avatar image">
+                        <div class="content">
+                          <div class="header m-opacity-mini">Sheriby</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <i class="calendar icon"></i>
+                        <span class="middle aligned">2020-07-18</span>
+                      </div>
+                      <div class="item">
+                        <i class="eye icon"></i>
+                        <span class="middle aligned">8848</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right aligned five wide column middle aligned">
+                    <a href="#" class="ui label mini teal basic m-font-thin">MyBatis</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <a href="#" target="_blank">
+                  <img src="../static/images/pic.jpg"
+                       class="ui rounded image centered" style="height: 160px;">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="ui padded vertical segment m-padding-lr-large-resp m-padding-tb-large m-clickable">
+            <div class="ui stackable mobile reversed grid">
+              <div class="eleven wide column">
+                <h3 class="ui header">使用MyBatis Plus简化我们的开发</h3>
+                <p class="m-text m-text-lined">
+                  MyBatis Plus是由国人开发的一款MyBatis的插件，完美兼容MyBatis，对MyBatis只做增强不做改变。
+                  源码中的注释也是中文，非常适合我们学习和使用。 源码中的注释也是中文，非常适合我们学习和使用。
+                  非常适合我们使用......
+                </p>
+                <div class="ui stackable mobile reversed grid">
+                  <div class="eleven wide column">
+                    <div class="ui mini horizontal link list middle aligned">
+                      <div class="item">
+                        <img
+                          src="../static/images/pic.jpg"
+                          style="width: 30px;height: 30px;" class="ui avatar image">
+                        <div class="content">
+                          <div class="header m-opacity-mini">Sheriby</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <i class="calendar icon"></i>
+                        <span class="middle aligned">2020-07-18</span>
+                      </div>
+                      <div class="item">
+                        <i class="eye icon"></i>
+                        <span class="middle aligned">8848</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right aligned five wide column middle aligned">
+                    <a href="#" class="ui label mini teal basic m-font-thin">MyBatis</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <a href="#" target="_blank">
+                  <img src="../static/images/pic.jpg"
+                       class="ui rounded image centered" style="height: 160px;">
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="ui padded vertical segment m-padding-lr-large-resp m-padding-tb-large m-clickable">
+            <div class="ui stackable mobile reversed grid">
+              <div class="eleven wide column">
+                <h3 class="ui header">使用MyBatis Plus简化我们的开发</h3>
+                <p class="m-text m-text-lined">
+                  MyBatis Plus是由国人开发的一款MyBatis的插件，完美兼容MyBatis，对MyBatis只做增强不做改变。
+                  源码中的注释也是中文，非常适合我们学习和使用。 源码中的注释也是中文，非常适合我们学习和使用。
+                  非常适合我们使用......
+                </p>
+                <div class="ui stackable mobile reversed grid">
+                  <div class="eleven wide column">
+                    <div class="ui mini horizontal link list middle aligned">
+                      <div class="item">
+                        <img
+                          src="../static/images/pic.jpg"
+                          style="width: 30px;height: 30px;" class="ui avatar image">
+                        <div class="content">
+                          <div class="header m-opacity-mini">Sheriby</div>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <i class="calendar icon"></i>
+                        <span class="middle aligned">2020-07-18</span>
+                      </div>
+                      <div class="item">
+                        <i class="eye icon"></i>
+                        <span class="middle aligned">8848</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right aligned five wide column middle aligned">
+                    <a href="#" class="ui label mini teal basic m-font-thin">MyBatis</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="five wide column">
+                <a href="#" target="_blank">
+                  <img src="../static/images/pic.jpg"
+                       class="ui rounded image centered" style="height: 160px;">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!--*/-->
+        </div>
+
+        <div class="ui bottom attached segment">
+          <div class="ui two column grid middle aligned">
+            <div class="column">
+              <div onclick="page(this)" th:attr="data-page=${page.number} - 1" th:unless="${page.first}" class="ui small button teal basic">上一页</div>
+            </div>
+            <div class="right aligned column">
+              <div onclick="page(this)" th:attr="data-page=${page.number} + 1" th:unless="${page.last}" class="ui small button teal basic">下一页</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padding-t-huge m-margin-t-large">
+  <div class="ui center aligned container">
+    <div class="ui inverted divided stackable grid">
+      <div class="three wide column">
+        <img src="../static/images/qrcode.png" class="ui rounded images" style="width: 110px;">
+      </div>
+      <div class="four wide column">
+        <h4 class="ui inverted header m-text">最新博客</h4>
+        <div class="ui inverted link list m-text">
+          <a href="#" class="item m-text-lined">Spring Boot实战</a>
+          <a href="#" class="item">Spring源码分析</a>
+          <a href="#" class="item m-text-lined">使用MyBatis Plus简化开发</a>
+        </div>
+      </div>
+      <div class="four wide column">
+        <h4 class="ui inverted header m-text">联系我</h4>
+        <div class="ui inverted link list m-text">
+          <a href="#" class="item m-text-lined"> Email: hony_sher@foxmail.com </a>
+          <a href="#" class="item "> QQ: 422343831</a>
+        </div>
+      </div>
+      <div class="five wide column">
+        <h4 class="ui inverted header m-text">Blog</h4>
+        <p class="ui inverted m-text m-opacity-large m-text-lined">
+          每个人都不得不面对这些问题。 在面对这种问题时， 我们都知道，只要有意义，那么就必须慎重考虑。 雷锋曾经说过，
+          自己活着，就是为人民。
+        </p>
+      </div>
+    </div>
+    <div class="ui inverted section divider"></div>
+    <div class="m-text">
+      <span>Copyright</span><i class="copyright icon"></i> <span>2020 - 2020 Designed By Sheriby</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

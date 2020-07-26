@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ToString(exclude = {"type", "tags", "user", "comments"})
+@ToString(exclude = {"type", "tags", "user", "comments", "content", "description"})
 @Entity
 @Table(name = "tb_blog")
 public class Blog {
@@ -29,19 +29,14 @@ public class Blog {
     private String picture;
     private String flag;
     private Integer views;
+    @Column(columnDefinition = "varchar(512)")
+    private String description;
 
     private boolean appreciation;
     private boolean shareStatement;
     private boolean comment;
     private boolean publish;
     private boolean recommend;
-
-    public Blog() {
-        appreciation = true;
-        shareStatement = true;
-        comment = true;
-        recommend = true;
-    }
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;

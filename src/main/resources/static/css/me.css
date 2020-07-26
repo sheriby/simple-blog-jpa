@@ -7,6 +7,10 @@ code {
   background: rgba(255, 212, 0, 0.6);
 }
 
+code[class*='language-'] {
+  color: #fff;
+}
+
 #toc ol {
   list-style: disc;
   color: #555;
@@ -139,6 +143,10 @@ code {
 
 .m-text-lined {
   line-height: 1.8 !important;
+}
+
+.m-text-lined-small {
+  line-height: 1.4 !important;
 }
 
 .m-opacity-mini {

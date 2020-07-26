@@ -10,7 +10,7 @@
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui header teal item">Blog</h2>
-      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 1} ? 'active'">
+      <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n == 1} ? 'active'">
         <i class="small home icon"></i>首页
       </a>
       <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 2} ? 'active'">
@@ -26,10 +26,12 @@
         <i class="small info icon"></i>关于
       </a>
       <div class="right m-item item m-mobile-hide">
-        <div class="ui icon input secondary">
-          <input type="text" placeholder="搜索" class="m-bg-transparent m-border-white m-font-white">
-          <i class="search icon link inverted"></i>
-        </div>
+        <form name="search" action="" method="get" target="_blank" th:action="@{/search}">
+          <div class="ui icon input secondary">
+            <input type="text" name="query" th:value="${query}" placeholder="搜索" class="m-bg-transparent m-border-white m-font-white">
+            <i onclick="document.forms['search'].submit()" class="search icon link inverted"></i>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -43,14 +45,16 @@
   <div class="ui center aligned container">
     <div class="ui inverted divided stackable grid">
       <div class="three wide column">
-        <img src="../../static/images/qrcode.png" th:src="@{images/qrcode.png}" class="ui rounded images" style="width: 110px;">
+        <img src="../../static/images/qrcode.png" th:src="@{/images/qrcode.png}" class="ui rounded images" style="width: 110px;">
       </div>
       <div class="four wide column">
         <h4 class="ui inverted header m-text">最新博客</h4>
         <div class="ui inverted link list m-text">
-          <a href="#" class="item m-text-lined">Spring Boot实战</a>
+          <a onclick="window.location.href='/blog/'+$(this).data('id')" th:attr="data-id=${blog.id}" th:each="blog : ${topBlogs}" href="#" target="_blank" class="item m-text-lined-small" th:text="${blog?.title}">Spring Boot实战</a>
+          <!--/*-->
           <a href="#" class="item">Spring源码分析</a>
           <a href="#" class="item m-text-lined">使用MyBatis Plus简化开发</a>
+          <!--*/-->
         </div>
       </div>
       <div class="four wide column">

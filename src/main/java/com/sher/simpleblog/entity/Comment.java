@@ -3,6 +3,7 @@ package com.sher.simpleblog.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(exclude = {"blog", "parentComment"})
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_comment")
@@ -23,7 +25,7 @@ public class Comment {
     private String nickname;
     private String email;
     private String content;
-    private String avator;
+    private String avatar;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;

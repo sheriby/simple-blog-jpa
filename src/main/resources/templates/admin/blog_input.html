@@ -161,6 +161,10 @@
         </div>
       </div>
 
+      <div class="field">
+        <textarea name="description" th:text="*{description}" cols="30" rows="5" placeholder="请输入博客描述"></textarea>
+      </div>
+
       <div class="two fields">
         <div class="field">
           <div class="ui fluid labeled input">
@@ -201,19 +205,19 @@
       <div class="inline fields">
         <div class="field">
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="recommend" name="recommend" th:checked="*{recommend}" checked class="hidden">
+            <input type="checkbox" id="recommend" name="recommend" th:checked="*{recommend}" class="hidden">
             <label for="recommend">推荐</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="info" name="shareStatement" th:checked="*{shareStatement}" checked class="hidden">
+            <input type="checkbox" id="info" name="shareStatement" th:checked="*{shareStatement}" class="hidden">
             <label for="info">转载</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" checked class="hidden">
+            <input type="checkbox" id="appreciation" name="appreciation" th:checked="*{appreciation}" class="hidden">
             <label for="appreciation">赞赏</label>
           </div>
           <div class="ui checkbox m-margin-r">
-            <input type="checkbox" id="comment" name="comment" th:checked="*{comment}" checked class="hidden">
+            <input type="checkbox" id="comment" name="comment" th:checked="*{comment}" class="hidden">
             <label for="comment">评论</label>
           </div>
         </div>

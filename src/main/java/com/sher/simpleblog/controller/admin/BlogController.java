@@ -58,7 +58,12 @@ public class BlogController {
 
     @GetMapping("/input")
     public String inputBlog(Model model) {
-        model.addAttribute("blog", new Blog());
+        Blog blog = new Blog();
+        blog.setRecommend(true);
+        blog.setShareStatement(true);
+        blog.setAppreciation(true);
+        blog.setComment(true);
+        model.addAttribute("blog", blog);
         getTypeAndTags(model);
 
         return "admin/blog_input";
@@ -88,6 +93,7 @@ public class BlogController {
 
     @PostMapping
     public String processInput(Blog blog, HttpSession session, RedirectAttributes attributes) {
+        System.out.println(blog);
         blog.setUser((User) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));

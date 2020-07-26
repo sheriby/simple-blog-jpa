@@ -10,6 +10,15 @@
   border: 0;
 }
 
+.typo code {
+  background: rgba(254,250,199,1);
+  color: #e67474;
+}
+
+.typo pre[class*='language-']{
+  background-color: #000 !important;
+}
+
 /* 去掉各Table cell 的边距并让其边重合 */
 .typo table {
   border-collapse: collapse;

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "comments.avatar",
+      "type": "java.lang.String",
+      "description": "Description for comments.avatar."
+    }
+  ] }
