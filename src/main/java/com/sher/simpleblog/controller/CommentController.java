@@ -1,6 +1,5 @@
 package com.sher.simpleblog.controller;
 
-import com.sher.simpleblog.entity.Blog;
 import com.sher.simpleblog.entity.Comment;
 import com.sher.simpleblog.service.BlogService;
 import com.sher.simpleblog.service.CommentService;
@@ -47,7 +46,6 @@ public class CommentController {
     @PostMapping
     public String processComment(Comment comment) {
         Long blogId = comment.getBlog().getId();
-        Blog blog = blogService.getBlog(blogId);
 
         comment.setAvatar(avatar);
 

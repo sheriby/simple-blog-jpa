@@ -22,6 +22,7 @@
     $(function () {
       $('.menu_toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide')
+        return false
       })
 
       $('#payBtn').popup({
@@ -37,6 +38,15 @@
         inline: true
       })
 
+      $('#showButtons').click(() => {
+        $('#buttons').toggleClass('m-mobile-hide')
+        $('#showButtons').hide()
+      })
+
+      $('#hide').click(() => {
+        $('#buttons').toggleClass('m-mobile-hide')
+        $('#showButtons').show()
+      })
 
       $('#top').click(function () {
         $(window).scrollTo(0, 500)
@@ -88,6 +98,7 @@
           'parentComment.id': $('[name="parentComment.id"]').val(),
           'blog.id': $('[name="blog.id"]').val(),
           'nickname': $('[name="nickname"]').val(),
+          'replyNickname': $('[name="replyNickname"]').val(),
           'email': $('[name="email"]').val(),
           'content': content.val()
         }, (responseTxt, statusTxt, xhr) => {
@@ -110,6 +121,7 @@
 
         content.attr('placeholder', '@' + nickname).focus()
         $('[name="parentComment.id"]').val(id)
+        $('[name="replyNickname"]').val(nickname)
         $(window).scrollTo(content, 500)
 
       }
@@ -199,7 +211,7 @@
       </div>
       <h2 class="ui center aligned header" style="letter-spacing: 0.3em; color: #e67474; font-size: 2em"
           th:text="${blog.title}">Linux命令行学习日记01</h2>
-      <div id="content" th:utext="${blog.content}" class="typo m-padding-lr-huge m-padding-tb-huge m-text m-text-lined">
+      <div id="content" th:utext="${blog.content}" class="typo m-padding-lr-huge-resp m-padding-tb-huge m-text m-text-lined">
         <h1 id="lianjie">链接文件</h1>
         <p>在linux中有两种链接文件，一种是硬链接，一种是软链接（又被称为符号链接）。</p>
         <h2 id="yinlianjie">硬链接</h2>
@@ -352,7 +364,7 @@ cp dict/* linkdict
         <p>&nbsp;</p>
       </div>
       <div class="m-padding-lr-huge">
-        <a class="ui basic teal left pointing label " th:each="tag : ${blog.tags}" th:text="${tag.name}">散文精选</a>
+        <a class="ui basic teal left pointing label " th:href="@{/tag/{id}(id=${tag.id})}" th:each="tag : ${blog.tags}" th:text="${tag.name}">散文精选</a>
       </div>
       <div class="ui center aligned basic segment" th:if="${blog.appreciation}">
         <div id="payBtn" class="ui orange basic circular button">赞赏</div>
@@ -415,22 +427,25 @@ cp dict/* linkdict
                   </div>
 
                 </div>
-                <div class="comments" th:unless="${comment.replyComments} == null" th:each="reply : ${comment.replyComments}">
+                <div class="comments" th:unless="${comment.replyComments} == null"
+                     th:each="reply : ${comment.replyComments}">
                   <div class="comment">
                     <a class="avatar">
                       <img src="../static/images/avatar/head.jpg" th:src="@{${reply.avatar}}" class="m-border-circle">
                     </a>
                     <div class="content">
-                      <a class="author" th:text="${reply.nickname}">Jenny Hess</a>
+                      <a class="author" th:text="|${reply.nickname}" >Jenny Hess</a>
+                      <span th:text="|@${reply.replyNickname}|" style="color: #00b5ad; font-weight: bold"></span>
                       <div class="metadata">
                         <span class="date" th:text="${#dates.format(reply.createTime, 'yyyy-MM-dd HH:mm')}">几分钟前</span>
                       </div>
                       <div class="text" th:text="${reply.content}">
                         Elliot you are always so right :)
                       </div>
-                      <!--                        <div class="actions">-->
-                      <!--                          <a class="reply">评论</a>-->
-                      <!--                        </div>-->
+                      <div class="actions">
+                        <a class="reply" th:attr="data-commentid=${comment.id}, data-nickname=${reply.nickname}"
+                          onclick="reply(this)">评论</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -517,6 +532,7 @@ cp dict/* linkdict
       <form class="ui form">
         <input type="hidden" name="blog.id" th:value="${blog.id}">
         <input type="hidden" name="parentComment.id" value="-1">
+        <input type="hidden" name="replyNickname">
         <div class="field">
           <textarea name="content" placeholder="请输入评论信息..."></textarea>
         </div>
@@ -545,11 +561,15 @@ cp dict/* linkdict
   </div>
 </div>
 
-<div class="ui vertical buttons icon" style="position: fixed; right: 0; bottom: 200px;z-index: 1">
+<div id="buttons" class="ui vertical buttons icon m-mobile-hide" style="position: fixed; right: 0; bottom: 200px;z-index: 1">
+  <div id="hide" class="ui basic blue button m-mobile-show"><i class="large chevron right icon"></i></div>
   <button type="button" id="tocBtn" class="ui teal button">目录</button>
   <div id="toComment" class="ui teal button">留言</div>
   <button id="showQr" class="ui green button"><i class="wechat icon"></i></button>
   <div id="top" class="ui basic green button"><i class="large chevron up icon"></i></div>
+</div>
+<div class="ui mini buttons icon m-mobile-show" style="position: fixed; right: 0; bottom: 260px;z-index: 1">
+  <button class="ui mini button" style="padding:0; width: 3em; height: 4em" id="showButtons"><i class="large chevron left icon"></i></button>
 </div>
 
 <div id="toc-container" class="ui flowing popup transition hidden">

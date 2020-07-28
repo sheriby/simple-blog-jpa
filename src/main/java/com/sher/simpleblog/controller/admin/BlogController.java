@@ -5,6 +5,7 @@ import com.sher.simpleblog.entity.User;
 import com.sher.simpleblog.service.BlogService;
 import com.sher.simpleblog.service.TagService;
 import com.sher.simpleblog.service.TypeService;
+import com.sher.simpleblog.util.ImageDownUtils;
 import com.sher.simpleblog.vo.BlogQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,13 @@ public class BlogController {
 
     @PostMapping
     public String processInput(Blog blog, HttpSession session, RedirectAttributes attributes) {
-        System.out.println(blog);
         blog.setUser((User) session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
+
+        String urlstr = blog.getPicture();
+        String pic = ImageDownUtils.downloadImage(urlstr);
+        blog.setPicture(pic);
 
         Blog b = null;
         if (blog.getId() == null) {

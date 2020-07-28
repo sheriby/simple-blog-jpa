@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>归档</title>
-  <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{css/semantic.min.css}">
-  <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
-  <script src="../static/js/jquery.js" th:src="@{js/jquery.js}"></script>
-  <script src="../static/js/semantic.min.js" th:src="@{js/semantic.min.js}"></script>
+  <link rel="stylesheet" href="../static/css/semantic.min.css" th:href="@{/css/semantic.min.css}">
+  <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+  <script src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+  <script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
 
   <script>
     $(function () {
       $('.menu_toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide')
+        return false
       })
     })
   </script>
@@ -50,55 +51,61 @@
           <h3 class="ui header teal">归档</h3>
         </div>
         <div class="right aligned column">
-          共 <h2 class="ui header orange m-inline-block m-font-thin">14</h2> 篇博客
+          共 <h2 class="ui header orange m-inline-block m-font-thin" th:text="${blogNums}">14</h2> 篇博客
         </div>
       </div>
     </div>
 
-    <h2 class="ui horizontal divider header center aligned m-margin-tb-large">2020</h2>
-    <div class="ui fluid vertical menu">
-      <a href="#" class="item">
+    <div th:each="entry : ${blogMap}">
+      <h2  th:text="${entry.key}"  class="ui horizontal divider header center aligned m-margin-tb-large">2020</h2>
+      <div class="ui fluid vertical menu">
+        <a th:href="@{/blog/{id}(id=${blog.id})}" th:each="blog : ${entry.value}" href="#" class="item">
+        <span>
+          <i class="ui small purple circle icon"></i>
+          <span th:text="${blog.title}">Spring Boot自动配置的原理</span>
+        </span>
+          <div class="ui orange basic left pointing label" th:text="${blog.flag}">原创</div>
+          <div class="ui green basic left pointing label" th:text="${#dates.format(blog.updateTime, 'MM月dd日')}">7月19日</div>
+        </a>
+        <!--/*-->
+        <a href="#" class="item">
         <span>
           <i class="ui small purple circle icon"></i>
           Spring Boot自动配置的原理
         </span>
-        <div class="ui orange basic left pointing label">原创</div>
-        <div class="ui green basic left pointing label">7月19日</div>
-      </a>
-      <a href="#" class="item">
+          <div class="ui orange basic left pointing label">原创</div>
+          <div class="ui green basic left pointing label">7月19日</div>
+        </a>
+        <a href="#" class="item">
         <span>
           <i class="ui small purple circle icon"></i>
           Spring Boot自动配置的原理
         </span>
-        <div class="ui orange basic left pointing label">原创</div>
-        <div class="ui green basic left pointing label">7月19日</div>
-      </a>
-      <a href="#" class="item">
+          <div class="ui orange basic left pointing label">转载</div>
+          <div class="ui green basic left pointing label">7月19日</div>
+        </a>
+        <a href="#" class="item">
         <span>
           <i class="ui small purple circle icon"></i>
           Spring Boot自动配置的原理
         </span>
-        <div class="ui orange basic left pointing label">转载</div>
-        <div class="ui green basic left pointing label">7月19日</div>
-      </a>
-      <a href="#" class="item">
+          <div class="ui orange basic left pointing label">原创</div>
+          <div class="ui green basic left pointing label">7月19日</div>
+        </a>
+        <a href="#" class="item">
         <span>
           <i class="ui small purple circle icon"></i>
           Spring Boot自动配置的原理
         </span>
-        <div class="ui orange basic left pointing label">原创</div>
-        <div class="ui green basic left pointing label">7月19日</div>
-      </a>
-      <a href="#" class="item">
-        <span>
-          <i class="ui small purple circle icon"></i>
-          Spring Boot自动配置的原理
-        </span>
-        <div class="ui orange basic left pointing label">原创</div>
-        <div class="ui green basic left pointing label">7月19日</div>
-      </a>
+          <div class="ui orange basic left pointing label">原创</div>
+          <div class="ui green basic left pointing label">7月19日</div>
+        </a>
+        <!--*/-->
+      </div>
     </div>
 
+
+    <!--/*-->
     <h2 class="ui horizontal divider header center aligned m-margin-tb-large">2019</h2>
     <div class="ui fluid vertical menu">
       <a href="#" class="item">
@@ -274,6 +281,7 @@
         <div class="ui green basic left pointing label">7月19日</div>
       </a>
     </div>
+    <!--*/-->
 
   </div>
 </div>

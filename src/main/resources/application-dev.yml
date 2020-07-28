@@ -1,12 +1,18 @@
 spring:
   datasource:
-    url: jdbc:mysql:///blog?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql:///blog?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
   jpa:
     hibernate:
       ddl-auto: update
+  resources:
+    static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, file:${images.uploadPath}
+  mvc:
+    static-path-pattern: /**
 #    show-sql: true
+images:
+  uploadPath: /home/sher/upload/
 
 logging:
   level:
@@ -17,3 +23,6 @@ logging:
 
 server:
   port: 8080
+
+
+

@@ -13,16 +13,16 @@
       <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n == 1} ? 'active'">
         <i class="small home icon"></i>首页
       </a>
-      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 2} ? 'active'">
+      <a href="#" th:href="@{/type}" class="m-item item m-mobile-hide" th:classappend="${n == 2} ? 'active'">
         <i class="small idea icon"></i>分类
       </a>
-      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 3} ? 'active'">
+      <a href="#" th:href="@{/tag}" class="m-item item m-mobile-hide" th:classappend="${n == 3} ? 'active'">
         <i class="small tags icon"></i>标签
       </a>
-      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 4} ? 'active'">
+      <a href="#" th:href="@{/archive}" class="m-item item m-mobile-hide" th:classappend="${n == 4} ? 'active'">
         <i class="small clone icon"></i>归档
       </a>
-      <a href="#" class="m-item item m-mobile-hide" th:classappend="${n == 5} ? 'active'">
+      <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n == 5} ? 'active'">
         <i class="small info icon"></i>关于
       </a>
       <div class="right m-item item m-mobile-hide">
@@ -50,7 +50,7 @@
       <div class="four wide column">
         <h4 class="ui inverted header m-text">最新博客</h4>
         <div class="ui inverted link list m-text">
-          <a onclick="window.location.href='/blog/'+$(this).data('id')" th:attr="data-id=${blog.id}" th:each="blog : ${topBlogs}" href="#" target="_blank" class="item m-text-lined-small" th:text="${blog?.title}">Spring Boot实战</a>
+          <a onclick="window.location.href='/blog/'+$(this).data('id')" th:attr="data-id=${blog.id}" th:each="blog : ${session.topBlogs}" href="#" target="_blank" class="item m-text-lined-small" th:text="${blog?.title}">Spring Boot实战</a>
           <!--/*-->
           <a href="#" class="item">Spring源码分析</a>
           <a href="#" class="item m-text-lined">使用MyBatis Plus简化开发</a>
@@ -60,15 +60,14 @@
       <div class="four wide column">
         <h4 class="ui inverted header m-text">联系我</h4>
         <div class="ui inverted link list m-text">
-          <a href="#" class="item m-text-lined"> Email: hony_sher@foxmail.com </a>
-          <a href="#" class="item "> QQ: 422343831</a>
+          <div class="item m-text-lined"> Email: hony_sher@foxmail.com </div>
+          <div class="item "> QQ: 422343831</div>
         </div>
       </div>
       <div class="five wide column">
         <h4 class="ui inverted header m-text">Blog</h4>
         <p class="ui inverted m-text m-opacity-large m-text-lined">
-          每个人都不得不面对这些问题。 在面对这种问题时， 我们都知道，只要有意义，那么就必须慎重考虑。 雷锋曾经说过，
-          自己活着，就是为人民。
+          　　无知而又纯洁的岁月 是任何人都曾拥有的 世界上没有一成不变的事务 所以只要以其他方式找到自己的快乐就行了
         </p>
       </div>
     </div>

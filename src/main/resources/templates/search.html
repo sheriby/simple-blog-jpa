@@ -13,6 +13,7 @@
     $(function () {
       $('.menu_toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide')
+        return false
       })
     })
 
@@ -107,11 +108,11 @@
                   </div>
 
                   <div class="right aligned five wide column middle aligned">
-                    <a href="#" class="ui label mini teal basic m-font-thin" th:text="${blog.type.name}">MyBatis</a>
+                    <a href="#" class="ui label mini teal basic m-font-thin" th:href="@{/type/{id}(id=${blog.type.id})}" th:text="${blog.type.name}">MyBatis</a>
                   </div>
                 </div>
                 <div style="float: right">
-                  <a th:each="tag : ${blog.tags}" th:text="${tag.name}" href="#" style="margin-left: 0.5em" class="ui label left pointing m-font-thin mini basic blue">Spring</a>
+                  <a th:each="tag : ${blog.tags}" th:text="${tag.name}" href="#" th:href="@{/tag/{id}(id=${tag.id})}" style="margin-left: 0.5em" class="ui label left pointing m-font-thin mini basic blue"></a>
                 </div>
               </div>
 

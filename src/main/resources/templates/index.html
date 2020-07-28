@@ -13,6 +13,7 @@
     $(function () {
       $('.menu_toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide')
+        return false
       })
 
       function loadPage(page) {
@@ -113,11 +114,11 @@
                       </div>
 
                       <div class="right aligned five wide column middle aligned">
-                        <a href="#" class="ui label mini teal basic m-font-thin" th:text="${blog.type.name}">MyBatis</a>
+                        <a href="#" class="ui label mini teal basic m-font-thin" th:href="@{/type/{id}(id=${blog.type.id})}" th:text="${blog.type.name}">MyBatis</a>
                       </div>
                     </div>
                     <div style="float: right">
-                      <a th:each="tag : ${blog.tags}" th:text="${tag.name}" href="#" style="margin-left: 0.5em" class="ui label left pointing m-font-thin mini basic blue"></a>
+                      <a th:each="tag : ${blog.tags}" th:text="${tag.name}" href="#" th:href="@{/tag/{id}(id=${tag.id})}" style="margin-left: 0.5em" class="ui label left pointing m-font-thin mini basic blue"></a>
                     </div>
                   </div>
 
@@ -303,13 +304,13 @@
                 <span>分类</span>
               </div>
               <div class="right aligned column">
-                <a href="#">More <i class="angle double right icon"></i></a>
+                <a href="#" th:href="@{/type}">More <i class="angle double right icon"></i></a>
               </div>
             </div>
           </div>
           <div class="ui violet segment">
             <div class="ui fluid vertical menu">
-              <a th:each="type : ${types}" href="#" class="item">
+              <a th:href="@{/type/{id}(id=${type.id})}" th:each="type : ${types}" href="#" class="item">
                 <span th:text="${type.name}">Spring</span>
                 <div th:text="${type.blogs.size()}" class="ui teal basic label left pointing">13</div>
               </a>
@@ -348,7 +349,7 @@
                 <span>标签</span>
               </div>
               <div class="right aligned column">
-                <a href="#">
+                <a th:href="@{/tag}" href="#">
                   More <i class="angle double right icon"></i>
                 </a>
               </div>
@@ -356,7 +357,7 @@
           </div>
 
           <div class="ui violet segment">
-            <a th:each="tag : ${tags}" href="#" class="ui teal basic label left pointing m-margin-tb">
+            <a th:href="@{/tag/{id}(id=${tag.id})}" th:each="tag : ${tags}" href="#" class="ui teal basic label left pointing m-margin-tb">
               <span th:text="${tag.name}">Java</span>
               <span th:text="${tag.blogs.size()}" class="detail">20</span>
             </a>
@@ -411,7 +412,7 @@
               </div>
             </div>
           </div>
-          <div onclick="blog(this)" th:attr="data-id=${blog.id}" th:each="blog, iterStat : ${topBlogs}" class="ui segment m-clickable"
+          <div onclick="blog(this)" th:attr="data-id=${blog.id}" th:each="blog, iterStat : ${session.topBlogs}" class="ui segment m-clickable"
                th:classappend="${iterStat.count == 1} ? 'violet'">
             <span class="m-font-black" th:text="${blog.title}">Spring Boot实战</span>
           </div>

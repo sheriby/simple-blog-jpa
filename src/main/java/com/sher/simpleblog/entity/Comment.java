@@ -26,6 +26,7 @@ public class Comment {
     private String email;
     private String content;
     private String avatar;
+    private String replyNickname;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;

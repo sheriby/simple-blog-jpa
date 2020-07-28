@@ -89,6 +89,28 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Blog> listBlogByTypeId(Long typeId, Pageable pageable) {
+        return blogRepository.findByTypeId(typeId, pageable);
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogRepository.findGroupByYear();
+        Map<String, List<Blog>> map = new TreeMap<>((a, b) -> {
+            return b.compareTo(a);
+        });
+        for (String year : years) {
+            map.put(year, blogRepository.findByYear(year));
+        }
+        return map;
+    }
+
+    @Override
+    public int updateView(Long id) {
+        return blogRepository.updateView(id);
+    }
+
+    @Override
     @Transactional
     public Blog saveBlog(Blog blog) {
         blog.setCreateTime(new Date());
