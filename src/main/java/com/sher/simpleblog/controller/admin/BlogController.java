@@ -39,6 +39,13 @@ public class BlogController {
         this.tagService = tagService;
     }
 
+    private ImageDownUtils imageDownUtils;
+
+    @Autowired
+    public void getImageDownUtils(ImageDownUtils imageDownUtils) {
+        this.imageDownUtils = imageDownUtils;
+    }
+
     @GetMapping
     public String blog(@PageableDefault(size = 5, sort = "updateTime",
             direction = Sort.Direction.DESC) Pageable pageable,
@@ -99,7 +106,7 @@ public class BlogController {
         blog.setTags(tagService.listTag(blog.getTagIds()));
 
         String urlstr = blog.getPicture();
-        String pic = ImageDownUtils.downloadImage(urlstr);
+        String pic = imageDownUtils.DownloadAndCompressImg(urlstr);
         blog.setPicture(pic);
 
         Blog b = null;
